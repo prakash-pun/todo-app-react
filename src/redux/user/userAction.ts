@@ -33,6 +33,7 @@ export const fetchUser = () => {
       .get("https://jsonplaceholder.typicode.com/users")
       .then((res) => {
         const users = res.data;
+        console.log(users);
         dispatch(fetchUsersSuccess(users));
       })
       .catch((err) => {

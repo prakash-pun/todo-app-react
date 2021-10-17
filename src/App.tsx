@@ -1,7 +1,6 @@
 import "./App.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
-import FetchUser from "./components/FetchUser";
 import TodoList from "./components/TodoList";
 
 function App() {

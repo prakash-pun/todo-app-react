@@ -4,28 +4,36 @@ import NewTodo from "./NewTodo";
 import TodoListItem from "./TodoListItem";
 import "./style.css";
 import { loadTodos } from "../redux/thunks";
+import Loading from "./Loading";
 
 type Props = {
-  todoData: any;
-  fetchTodo: any;
+  todoData: ITodoObject;
+  fetchTodo: () => void;
 };
 
 const TodoList: React.FC<Props> = ({ todoData, fetchTodo }) => {
   useEffect(() => {
     fetchTodo();
   }, [fetchTodo]);
-  const content = (
-    <div className="todo-container">
+  return (
+    <div>
       <NewTodo />
-      <h3>My Todo: </h3>
-      <h3>{todoData}</h3>
-
-      {todoData.todo.map((todo: ITodo) => (
-        <TodoListItem todo={todo} key={todo.id} />
-      ))}
+      <div className="task-heading">
+        <h2>My Task</h2>
+      </div>
+      {todoData.isLoading ? (
+        <Loading />
+      ) : (
+        <div className="todo-container">
+          {todoData &&
+            todoData.todos &&
+            todoData.todos.map((todo: ITodo) => (
+              <TodoListItem key={todo._id} todo={todo} />
+            ))}
+        </div>
+      )}
     </div>
   );
-  return content;
 };
 
 const mapStateToProps = (state: TodoState) => {

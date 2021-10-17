@@ -29,7 +29,7 @@ export const loadTodosInProgress = () => ({
 export const loadTodosSuccess = (todos: any) => {
   return {
     type: LOAD_TODOS_SUCCESS,
-    payload: { todos },
+    payload: todos,
   };
 };
 

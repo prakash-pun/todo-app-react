@@ -6,7 +6,9 @@
 .form-container {
   border-radius: 8px;
   text-align: center;
-  margin: 2rem 0rem 2rem 0rem;
+  max-width: 700px;
+  margin: auto;
+  margin-top: 3rem;
 }
 
 body {
@@ -19,7 +21,7 @@ body {
   border: none;
   border-bottom: 2px solid #ddd;
   border-radius: 8px;
-  width: 70%;
+  width: 75%;
   outline: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -50,17 +52,23 @@ body {
 
 .todo-item-container {
   background: #fff;
-  border-radius: 8px;
+  border-radius: 5px;
   margin-top: 8px;
-  padding: 16px;
-  position: relative;
-  box-shadow: 0 4px 8px grey;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
 }
 
-.todo-button-container {
-  position: absolute;
-  right: 12px;
-  bottom: 12px;
+.todo-content {
+  display: flex;
+}
+
+.todo-content-box {
+  margin-left: 1rem;
+}
+
+.todo-content-title {
+  margin-left: 0.6rem;
 }
 
 .completed-button {
@@ -74,14 +82,27 @@ body {
   background-color: #22ee22;
 }
 
+.remove-content {
+  display: flex;
+  align-items: center;
+  margin-right: 0.6rem;
+}
+
 .remove-button {
-  font-size: 16px;
-  padding: 8px;
+  align-items: center;
+  text-align: center;
+  font-size: 20px;
+  padding: 5px;
   border: none;
-  border-radius: 8px;
+  border-radius: 5px;
   outline: none;
   cursor: pointer;
   display: inline-block;
-  background-color: #ee2222;
+  background-color: #ee4242;
   margin-left: 8px;
+}
+
+.task-heading {
+  max-width: 700px;
+  color: #ddd;
 }

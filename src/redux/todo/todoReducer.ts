@@ -9,13 +9,10 @@ import {
 
 const initialState: TodoState = { isLoading: false, todos: [] };
 
-export const todos = (
-  state: TodoState = initialState,
-  action: any
-): TodoState => {
+export const todos = (state = initialState, action: any): TodoState => {
   switch (action.type) {
     case CREATE_TODO:
-      const newTodo: ITodo = action.todo;
+      const newTodo: ITodo = action.payload;
       return {
         ...state,
         todos: state.todos.concat(newTodo),
@@ -23,7 +20,7 @@ export const todos = (
 
     case REMOVE_TODO:
       const removeTodo: ITodo[] = state.todos.filter(
-        (todo) => todo.id !== action.todo.id
+        (todo) => todo._id !== action.payload._id
       );
 
       return {
@@ -33,7 +30,7 @@ export const todos = (
 
     case MARK_TODO_AS_COMPLETED:
       const updatedTodo: ITodo[] = state.todos.filter(
-        (todo) => todo.id !== action.todo.id
+        (todo) => todo._id !== action.payload._id
       );
 
       return {
@@ -42,10 +39,9 @@ export const todos = (
       };
 
     case LOAD_TODOS_SUCCESS:
-      console.log(action.payload);
       return {
         ...state,
-        todos: action.todo,
+        todos: action.payload,
         isLoading: false,
       };
 

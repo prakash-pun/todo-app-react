@@ -12,7 +12,7 @@ import {
 export const loadTodos = () => async (dispatch: Dispatch) => {
   try {
     dispatch(loadTodosInProgress());
-    const response = await axios.get("http://localhost:8080/todos");
+    const response = await axios.get("http://localhost:8080/todos-delay");
     const todos = response.data;
     dispatch(loadTodosSuccess(todos));
   } catch (e) {
@@ -23,14 +23,16 @@ export const loadTodos = () => async (dispatch: Dispatch) => {
 export const addTodoRequest = (text: string) => async (dispatch: Dispatch) => {
   try {
     const body = JSON.stringify({ text });
-    const response = await fetch("http://localhost:8080/todos", {
+    console.log(text);
+    const response = await fetch("http://localhost:8080/new", {
       headers: {
+        "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
       method: "post",
       body,
     });
-
+    console.log(response);
     const todo = await response.json();
     dispatch(createTodo(todo));
   } catch (e) {

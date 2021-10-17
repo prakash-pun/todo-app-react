@@ -1,8 +1,13 @@
 interface ITodo {
-  id: string;
+  _id: string;
   text: string;
   isCompleted: boolean;
   createdAt: Date;
+}
+
+interface ITodoObject {
+  isLoading: boolean;
+  todos: ITodo[];
 }
 
 type TodoState = {
@@ -12,7 +17,7 @@ type TodoState = {
 
 type TodoAction = {
   type: string;
-  todo: ITodo;
+  payload: ITodo;
 };
 
 type DispatchType = (args: TodoAction) => TodoAction;

@@ -1,4 +1,5 @@
 import React from "react";
+import { AiFillDelete } from "react-icons/ai";
 import "./style.css";
 
 type Props = {
@@ -8,11 +9,14 @@ type Props = {
 const TodoListItem: React.FC<Props> = ({ todo }) => {
   return (
     <div className="todo-item-container">
-      <h3>{todo.text}</h3>
-      <p>Created at: &nbsp; {new Date(todo.createdAt).toLocaleDateString()}</p>
-      <div className="todo-button-container">
-        <button className="completed-button">Mark As Completed</button>
-        <button className="remove-button">Remove</button>
+      <div className="todo-content">
+        <input className="todo-content-box" type="checkbox" />
+        <h3 className="todo-content-title">{todo.text}</h3>
+      </div>
+      <div className="remove-content">
+        <button className="remove-button">
+          <AiFillDelete />
+        </button>
       </div>
     </div>
   );
