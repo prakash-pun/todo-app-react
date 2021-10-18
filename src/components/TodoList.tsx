@@ -2,20 +2,23 @@ import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import NewTodo from "./NewTodo";
 import TodoListItem from "./TodoListItem";
+import Loading from "./Loading";
 import "./style.css";
+import TodoIcon from "./TodoIcon";
 import {
   loadTodos,
-  markTodoAsCompltedRequest,
+  markTodoAsCompletedRequest,
   removeTodoRequest,
 } from "../redux/thunks";
-import Loading from "./Loading";
 import {
   getCompletedTodos,
   getIncompleteTodos,
+  getTodos,
   getTodosLoading,
 } from "../redux/selector";
 
 type Props = {
+  todos: any;
   incompleteTodos: any;
   completedTodos: any;
   fetchTodo: () => void;
@@ -25,6 +28,7 @@ type Props = {
 };
 
 const TodoList: React.FC<Props> = ({
+  todos,
   fetchTodo,
   isLoading,
   incompleteTodos,
@@ -44,25 +48,37 @@ const TodoList: React.FC<Props> = ({
       {isLoading ? (
         <Loading />
       ) : (
-        <div className="todo-container">
-          {incompleteTodos.map((todo: ITodo) => (
-            <TodoListItem
-              key={todo._id}
-              todo={todo}
-              onRemovePressed={onRemovePressed}
-              onCompletedPressed={onCompletedPressed}
-            />
-          ))}
-          <h3>Completed</h3>
-          {completedTodos.map((todo: ITodo) => (
-            <TodoListItem
-              key={todo._id}
-              todo={todo}
-              onRemovePressed={onRemovePressed}
-              onCompletedPressed={onCompletedPressed}
-            />
-          ))}
-        </div>
+        <>
+          <div className="todo-container">
+            {todos.length <= 0 ? (
+              <TodoIcon />
+            ) : (
+              incompleteTodos.map((todo: ITodo) => (
+                <TodoListItem
+                  key={todo._id}
+                  todo={todo}
+                  onRemovePressed={onRemovePressed}
+                  onCompletedPressed={onCompletedPressed}
+                />
+              ))
+            )}
+          </div>
+          {completedTodos.length > 0 ? (
+            <div className="todo-container">
+              <h3 className="complete">Completed</h3>
+              {completedTodos.map((todo: ITodo) => (
+                <TodoListItem
+                  key={todo._id}
+                  todo={todo}
+                  onRemovePressed={onRemovePressed}
+                  onCompletedPressed={onCompletedPressed}
+                />
+              ))}
+            </div>
+          ) : (
+            <div></div>
+          )}
+        </>
       )}
     </div>
   );
@@ -70,6 +86,7 @@ const TodoList: React.FC<Props> = ({
 
 const mapStateToProps = (state: any) => {
   return {
+    todos: getTodos(state),
     isLoading: getTodosLoading(state),
     incompleteTodos: getIncompleteTodos(state),
     completedTodos: getCompletedTodos(state),
@@ -80,7 +97,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     fetchTodo: () => dispatch(loadTodos()),
     onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),
-    onCompletedPressed: (id: string) => dispatch(markTodoAsCompltedRequest(id)),
+    onCompletedPressed: (id: string) =>
+      dispatch(markTodoAsCompletedRequest(id)),
   };
 };
 

@@ -105,4 +105,15 @@ body {
 .task-heading {
   max-width: 700px;
   color: #ddd;
+  margin: auto;
+  text-align: left;
+}
+
+.todo-container .complete {
+  text-align: left;
+  color: #ddd;
+}
+
+.task-icon {
+  width: 10rem;
 }

@@ -51,7 +51,7 @@ export const removeTodoRequest = (id: string) => async (dispatch: Dispatch) => {
   }
 };
 
-export const markTodoAsCompltedRequest =
+export const markTodoAsCompletedRequest =
   (id: string) => async (dispatch: Dispatch) => {
     try {
       const response = await fetch(
