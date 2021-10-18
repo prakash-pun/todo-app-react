@@ -36,7 +36,7 @@ const NewTodo: React.FC<Props> = ({ todos, onCreatePressed }) => {
           }
         }}
       >
-        Create Task
+        Create Todo
       </button>
     </div>
   );

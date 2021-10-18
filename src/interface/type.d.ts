@@ -5,11 +5,6 @@ interface ITodo {
   createdAt: Date;
 }
 
-interface ITodoObject {
-  isLoading: boolean;
-  todos: ITodo[];
-}
-
 type TodoState = {
   isLoading: boolean;
   todos: ITodo[];

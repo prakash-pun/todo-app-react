@@ -9,17 +9,17 @@ import {
 
 export const createTodo = (todo: ITodo) => ({
   type: CREATE_TODO,
-  payload: { todo },
+  payload: todo,
 });
 
 export const removeTodo = (todo: ITodo) => ({
   type: REMOVE_TODO,
-  payload: { todo },
+  payload: todo,
 });
 
 export const markTodoAsCompleted = (todo: ITodo) => ({
   type: MARK_TODO_AS_COMPLETED,
-  payload: { todo },
+  payload: todo,
 });
 
 export const loadTodosInProgress = () => ({

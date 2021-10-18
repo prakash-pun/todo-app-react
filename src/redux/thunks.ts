@@ -32,7 +32,6 @@ export const addTodoRequest = (text: string) => async (dispatch: Dispatch) => {
       method: "post",
       body,
     });
-    console.log(response);
     const todo = await response.json();
     dispatch(createTodo(todo));
   } catch (e) {
