@@ -2,7 +2,7 @@ interface ITodo {
   _id: string;
   text: string;
   isCompleted: boolean;
-  createdAt: Date;
+  createdAt?: Date;
 }
 
 type TodoState = {

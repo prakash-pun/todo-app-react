@@ -19,7 +19,7 @@ export const removeTodo = (todo: ITodo) => ({
 
 export const markTodoAsCompleted = (todo: ITodo) => ({
   type: MARK_TODO_AS_COMPLETED,
-  payload: todo,
+  payload: { todo },
 });
 
 export const loadTodosInProgress = () => ({

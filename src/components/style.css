@@ -3,9 +3,12 @@
   margin: auto;
 }
 
+.main-container {
+  margin: 0rem 1rem;
+}
+
 .form-container {
   border-radius: 8px;
-  text-align: center;
   max-width: 700px;
   margin: auto;
   margin-top: 3rem;
@@ -21,7 +24,7 @@ body {
   border: none;
   border-bottom: 2px solid #ddd;
   border-radius: 8px;
-  width: 75%;
+  width: 80%;
   outline: none;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
@@ -37,7 +40,8 @@ body {
   border-radius: 5px;
   outline: none;
   cursor: pointer;
-  width: 20%;
+  position: fixed;
+  /* width: 20%; */
   border: none;
   color: #fff;
   background-color: #28a745;
@@ -61,6 +65,7 @@ body {
 
 .todo-content {
   display: flex;
+  margin: -0.4rem 0;
 }
 
 .todo-content-box {
@@ -116,4 +121,8 @@ body {
 
 .task-icon {
   width: 10rem;
+}
+
+.icon-container {
+  text-align: center;
 }

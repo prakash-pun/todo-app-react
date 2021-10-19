@@ -12,7 +12,7 @@ import {
 export const loadTodos = () => async (dispatch: Dispatch) => {
   try {
     dispatch(loadTodosInProgress());
-    const response = await axios.get("http://localhost:8080/todos-delay");
+    const response = await axios.get("http://localhost:8080/todos");
     const todos = response.data;
     dispatch(loadTodosSuccess(todos));
   } catch (e) {
@@ -23,13 +23,12 @@ export const loadTodos = () => async (dispatch: Dispatch) => {
 export const addTodoRequest = (text: string) => async (dispatch: Dispatch) => {
   try {
     const body = JSON.stringify({ text });
-    console.log(text);
     const response = await fetch("http://localhost:8080/new", {
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
-      method: "post",
+      method: "POST",
       body,
     });
     const todo = await response.json();
@@ -42,7 +41,7 @@ export const addTodoRequest = (text: string) => async (dispatch: Dispatch) => {
 export const removeTodoRequest = (id: string) => async (dispatch: Dispatch) => {
   try {
     const response = await fetch(`http://localhost:8080/todos/${id}`, {
-      method: "delete",
+      method: "DELETE",
     });
     const removedTodo = await response.json();
     dispatch(removeTodo(removedTodo));
@@ -57,7 +56,7 @@ export const markTodoAsCompletedRequest =
       const response = await fetch(
         `http://localhost:8080/todos/${id}/completed`,
         {
-          method: "post",
+          method: "POST",
         }
       );
       const updatedTodo = await response.json();

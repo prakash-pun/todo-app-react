@@ -1,8 +1,9 @@
 import task from "../task.svg";
+import "./style.css";
 
 const TodoIcon = () => {
   return (
-    <div>
+    <div className="icon-container">
       <img src={task} className="task-icon" alt="task" />
     </div>
   );

@@ -23,12 +23,12 @@ const NewTodo: React.FC<Props> = ({ todos, onCreatePressed }) => {
       />
       <button
         className="new-todo-button"
+        disabled={!text}
         onClick={() => {
           const isDuplicateText = todos.some(
             (todo: ITodo) => todo.text === text
           );
           if (!isDuplicateText) {
-            console.log("ram");
             onCreatePressed(text);
             setText("");
           } else {

@@ -40,7 +40,7 @@ const TodoList: React.FC<Props> = ({
     fetchTodo();
   }, [fetchTodo]);
   return (
-    <div>
+    <div className="main-container">
       <NewTodo />
       <div className="task-heading">
         <h2>My Task</h2>

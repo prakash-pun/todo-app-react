@@ -29,13 +29,16 @@ export const todos = (state = initialState, action: any): TodoState => {
       };
 
     case MARK_TODO_AS_COMPLETED:
-      const updatedTodo: ITodo[] = state.todos.filter(
-        (todo) => todo._id !== action.payload._id
-      );
+      const { todo: updatedTodo } = action.payload;
 
       return {
         ...state,
-        todos: updatedTodo,
+        todos: state.todos.map((todo) => {
+          if (todo._id === updatedTodo._id) {
+            return updatedTodo;
+          }
+          return todo;
+        }),
       };
 
     case LOAD_TODOS_SUCCESS:
