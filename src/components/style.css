@@ -40,7 +40,7 @@ body {
   border-radius: 5px;
   outline: none;
   cursor: pointer;
-  position: fixed;
+  position: absolute;
   /* width: 20%; */
   border: none;
   color: #fff;

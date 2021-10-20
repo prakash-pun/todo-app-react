@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
-import { connect } from "react-redux";
-import NewTodo from "./NewTodo";
+import React, { useEffect, useCallback } from "react";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { Dispatch } from "redux";
 import TodoListItem from "./TodoListItem";
+import TodoIcon from "./TodoIcon";
+import NewTodo from "./NewTodo";
 import Loading from "./Loading";
 import "./style.css";
-import TodoIcon from "./TodoIcon";
 import {
+  addTodoRequest,
   loadTodos,
   markTodoAsCompletedRequest,
   removeTodoRequest,
@@ -13,39 +15,46 @@ import {
 import {
   getCompletedTodos,
   getIncompleteTodos,
-  getTodos,
   getTodosLoading,
 } from "../redux/selector";
 
-type Props = {
-  todos: any;
-  incompleteTodos: any;
-  completedTodos: any;
-  fetchTodo: () => void;
-  isLoading: boolean;
-  onRemovePressed: (id: string) => void;
-  onCompletedPressed: (id: string) => void;
-};
+const TodoList: React.FC = () => {
+  const todos: readonly ITodo[] = useSelector(
+    (state: TodoState) => state.todos,
+    shallowEqual
+  );
 
-const TodoList: React.FC<Props> = ({
-  todos,
-  fetchTodo,
-  isLoading,
-  incompleteTodos,
-  completedTodos,
-  onRemovePressed,
-  onCompletedPressed,
-}) => {
+  const isLoadingg: boolean = useSelector((state: TodoState) =>
+    getTodosLoading(state)
+  );
+
+  const incompleteTodoss: readonly ITodo[] = useSelector((state: TodoState) =>
+    getIncompleteTodos(state)
+  );
+
+  const completeTodoss: readonly ITodo[] = useSelector((state: TodoState) =>
+    getCompletedTodos(state)
+  );
+
+  const dispatch: Dispatch<any> = useDispatch();
+
+  const addTodo = useCallback(
+    (todo: ITodo) => dispatch(addTodoRequest(todo.text)),
+    [dispatch]
+  );
+
+  const fetchTodos = useCallback(() => dispatch(loadTodos()), [dispatch]);
+
   useEffect(() => {
-    fetchTodo();
-  }, [fetchTodo]);
+    fetchTodos();
+  }, [fetchTodos]);
   return (
     <div className="main-container">
-      <NewTodo />
+      <NewTodo addTodo={addTodo} />
       <div className="task-heading">
         <h2>My Task</h2>
       </div>
-      {isLoading ? (
+      {isLoadingg ? (
         <Loading />
       ) : (
         <>
@@ -53,25 +62,25 @@ const TodoList: React.FC<Props> = ({
             {todos.length <= 0 ? (
               <TodoIcon />
             ) : (
-              incompleteTodos.map((todo: ITodo) => (
+              incompleteTodoss.map((todo: ITodo) => (
                 <TodoListItem
                   key={todo._id}
                   todo={todo}
-                  onRemovePressed={onRemovePressed}
-                  onCompletedPressed={onCompletedPressed}
+                  removeTodo={removeTodoRequest}
+                  onCompletedPressed={markTodoAsCompletedRequest}
                 />
               ))
             )}
           </div>
-          {completedTodos.length > 0 ? (
+          {completeTodoss.length > 0 ? (
             <div className="todo-container">
               <h3 className="complete">Completed</h3>
-              {completedTodos.map((todo: ITodo) => (
+              {completeTodoss.map((todo: ITodo) => (
                 <TodoListItem
                   key={todo._id}
                   todo={todo}
-                  onRemovePressed={onRemovePressed}
-                  onCompletedPressed={onCompletedPressed}
+                  removeTodo={removeTodoRequest}
+                  onCompletedPressed={markTodoAsCompletedRequest}
                 />
               ))}
             </div>
@@ -84,22 +93,4 @@ const TodoList: React.FC<Props> = ({
   );
 };
 
-const mapStateToProps = (state: any) => {
-  return {
-    todos: getTodos(state),
-    isLoading: getTodosLoading(state),
-    incompleteTodos: getIncompleteTodos(state),
-    completedTodos: getCompletedTodos(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    fetchTodo: () => dispatch(loadTodos()),
-    onRemovePressed: (id: string) => dispatch(removeTodoRequest(id)),
-    onCompletedPressed: (id: string) =>
-      dispatch(markTodoAsCompletedRequest(id)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
+export default TodoList;
