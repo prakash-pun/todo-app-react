@@ -1,60 +1,35 @@
-import React, { useEffect, useCallback } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { Dispatch } from "redux";
+import React from "react";
 import TodoListItem from "./TodoListItem";
+import useTodo from "../hooks/useTodo";
 import TodoIcon from "./TodoIcon";
 import NewTodo from "./NewTodo";
 import Loading from "./Loading";
 import "./style.css";
-import {
-  addTodoRequest,
-  loadTodos,
-  markTodoAsCompletedRequest,
-  removeTodoRequest,
-} from "../redux/thunks";
-import {
-  getCompletedTodos,
-  getIncompleteTodos,
-  getTodosLoading,
-} from "../redux/selector";
 
 const TodoList: React.FC = () => {
-  const todos: readonly ITodo[] = useSelector(
-    (state: TodoState) => state.todos,
-    shallowEqual
-  );
+  const [
+    todos,
+    isLoading,
+    incompleteTodos,
+    completeTodos,
+    todo,
+    handleTodoData,
+    addNewTodo,
+    deleteTodo,
+    completeTodo,
+  ] = useTodo();
 
-  const isLoadingg: boolean = useSelector((state: TodoState) =>
-    getTodosLoading(state)
-  );
-
-  const incompleteTodoss: readonly ITodo[] = useSelector((state: TodoState) =>
-    getIncompleteTodos(state)
-  );
-
-  const completeTodoss: readonly ITodo[] = useSelector((state: TodoState) =>
-    getCompletedTodos(state)
-  );
-
-  const dispatch: Dispatch<any> = useDispatch();
-
-  const addTodo = useCallback(
-    (todo: ITodo) => dispatch(addTodoRequest(todo.text)),
-    [dispatch]
-  );
-
-  const fetchTodos = useCallback(() => dispatch(loadTodos()), [dispatch]);
-
-  useEffect(() => {
-    fetchTodos();
-  }, [fetchTodos]);
   return (
     <div className="main-container">
-      <NewTodo addTodo={addTodo} />
+      <NewTodo
+        todo={todo}
+        handleTodoData={handleTodoData}
+        addTodo={addNewTodo}
+      />
       <div className="task-heading">
         <h2>My Task</h2>
       </div>
-      {isLoadingg ? (
+      {isLoading ? (
         <Loading />
       ) : (
         <>
@@ -62,25 +37,25 @@ const TodoList: React.FC = () => {
             {todos.length <= 0 ? (
               <TodoIcon />
             ) : (
-              incompleteTodoss.map((todo: ITodo) => (
+              incompleteTodos.map((todo: ITodo) => (
                 <TodoListItem
                   key={todo._id}
                   todo={todo}
-                  removeTodo={removeTodoRequest}
-                  onCompletedPressed={markTodoAsCompletedRequest}
+                  removeTodo={deleteTodo}
+                  onCompletedPressed={completeTodo}
                 />
               ))
             )}
           </div>
-          {completeTodoss.length > 0 ? (
+          {completeTodos.length > 0 ? (
             <div className="todo-container">
               <h3 className="complete">Completed</h3>
-              {completeTodoss.map((todo: ITodo) => (
+              {completeTodos.map((todo: ITodo) => (
                 <TodoListItem
                   key={todo._id}
                   todo={todo}
-                  removeTodo={removeTodoRequest}
-                  onCompletedPressed={markTodoAsCompletedRequest}
+                  removeTodo={deleteTodo}
+                  onCompletedPressed={completeTodo}
                 />
               ))}
             </div>

@@ -1,29 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import "./style.css";
 
 type Props = {
-  addTodo: (todo: ITodo) => void;
+  todo: ITodo;
+  handleTodoData: any;
+  addTodo: (todo: ITodo | any) => void;
 };
 
-const NewTodo: React.FC<Props> = ({ addTodo }) => {
-  const [todo, setTodo] = useState<any | {}>();
-
-  const handleTodoData = (e: React.FormEvent<HTMLInputElement>) => {
-    setTodo({
-      ...todo,
-      [e.currentTarget.id]: e.currentTarget.value,
-    });
-  };
-
-  const addNewTodo = (e: React.FormEvent) => {
-    e.preventDefault();
-    addTodo(todo);
-    setTodo("");
-  };
-
+const NewTodo: React.FC<Props> = ({ todo, handleTodoData, addTodo }) => {
   return (
     <div className="form-container">
-      <form onSubmit={addNewTodo}>
+      <form onSubmit={addTodo}>
         <input
           className="todo-input"
           type="text"
