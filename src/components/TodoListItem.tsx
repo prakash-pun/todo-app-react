@@ -3,7 +3,7 @@ import { AiFillDelete } from "react-icons/ai";
 import "./style.css";
 
 type Props = {
-  todo: any;
+  todo: ITodo;
   removeTodo: (todo: ITodo) => void;
   onCompletedPressed: (todo: ITodo) => void;
 };
