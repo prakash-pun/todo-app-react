@@ -1,57 +1,29 @@
-import React, { useState } from "react";
-import { connect } from "react-redux";
-import { getTodos } from "../redux/selector";
-import { addTodoRequest } from "../redux/thunks";
+import React from "react";
 import "./style.css";
 
 type Props = {
-  todos: any;
-  onCreatePressed: (text: string) => void;
+  todo: ITodo;
+  handleTodoData: any;
+  addTodo: (todo: ITodo | any) => void;
 };
 
-const NewTodo: React.FC<Props> = ({ todos, onCreatePressed }) => {
-  const [text, setText] = useState("");
-
+const NewTodo: React.FC<Props> = ({ todo, handleTodoData, addTodo }) => {
   return (
     <div className="form-container">
-      <input
-        className="todo-input"
-        type="text"
-        placeholder="Add a task"
-        value={text}
-        onChange={(e) => setText(e.target.value)}
-      />
-      <button
-        className="new-todo-button"
-        disabled={!text}
-        onClick={() => {
-          const isDuplicateText = todos.some(
-            (todo: ITodo) => todo.text === text
-          );
-          if (!isDuplicateText) {
-            onCreatePressed(text);
-            setText("");
-          } else {
-            setText("");
-          }
-        }}
-      >
-        Create Todo
-      </button>
+      <form onSubmit={addTodo}>
+        <input
+          className="todo-input"
+          type="text"
+          id="text"
+          placeholder="Add a task"
+          onChange={handleTodoData}
+        />
+        <button disabled={!todo} className="new-todo-button">
+          Create Todo
+        </button>
+      </form>
     </div>
   );
 };
 
-const mapStateToProps = (state: TodoState) => {
-  return {
-    todos: getTodos(state),
-  };
-};
-
-const mapDispatchToProps = (dispatch: any) => {
-  return {
-    onCreatePressed: (text: string) => dispatch(addTodoRequest(text)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewTodo);
+export default NewTodo;

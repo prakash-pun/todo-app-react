@@ -4,7 +4,7 @@ import "../App.css";
 
 const Loading = () => {
   return (
-    <div>
+    <div className="icon-container">
       <img src={logo} className="App-logo" alt="logo" />
     </div>
   );

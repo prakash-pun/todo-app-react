@@ -3,14 +3,14 @@ import { AiFillDelete } from "react-icons/ai";
 import "./style.css";
 
 type Props = {
-  todo: any;
-  onRemovePressed: (id: string) => void;
-  onCompletedPressed: (id: string) => void;
+  todo: ITodo;
+  removeTodo: (todo: ITodo) => void;
+  onCompletedPressed: (todo: ITodo) => void;
 };
 
 const TodoListItem: React.FC<Props> = ({
   todo,
-  onRemovePressed,
+  removeTodo,
   onCompletedPressed,
 }) => {
   return (
@@ -22,17 +22,14 @@ const TodoListItem: React.FC<Props> = ({
           <input
             className="todo-content-box"
             type="checkbox"
-            onClick={() => onCompletedPressed(todo._id)}
+            onClick={() => onCompletedPressed(todo)}
           />
         )}
 
         <h3 className="todo-content-title">{todo.text}</h3>
       </div>
       <div className="remove-content">
-        <button
-          className="remove-button"
-          onClick={() => onRemovePressed(todo._id)}
-        >
+        <button className="remove-button" onClick={() => removeTodo(todo)}>
           <AiFillDelete />
         </button>
       </div>
